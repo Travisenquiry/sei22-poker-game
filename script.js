@@ -367,14 +367,27 @@ let allCards = [
 let allCardsUnchanged = [...allCards];
 let currentHand = [];
 let dealButton = document.getElementById("deal");
+let swapButton = document.getElementById("swap");
 
 let dealFiveCards = function (){
-  let temp1 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
-  let temp2 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
-  let temp3 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
-  let temp4 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
-  let temp5 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
+  let temp1 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+  let temp2 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+  let temp3 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+  let temp4 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+  let temp5 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
   currentHand = currentHand.concat(temp1, temp2, temp3, temp4, temp5);
+  for(let i = 0; i < currentHand.length; i++){
+    let imgDOM = document.createElement("IMG");
+    imgDOM.src = currentHand[i].image;
+    imgDOM.className = "cards";
+    imgDOM.id = "card-" + String(i);
+    document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
+    dealButton.className = "hide";
+  }
+}
+
+let swapCards = function(){
+
 }
 
 let checkWinningHand = function (){
@@ -382,3 +395,4 @@ let checkWinningHand = function (){
 }
 
 dealButton.addEventListener("click", dealFiveCards);
+swapButton.addEventListener("click", swapCards);
