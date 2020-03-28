@@ -394,6 +394,8 @@ let swapCards = function(){
     let empty = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
     if(document.getElementById("card-" + String(i)).classList.contains("selected")){
       currentHand.splice(i, 1, empty[0]);
+      document.getElementById("card-" + String(i)).classList.remove("selected")
+      document.getElementById("card-" + String(i)).src = currentHand[i].image;
     }
   }
 }
