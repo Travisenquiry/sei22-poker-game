@@ -3,7 +3,7 @@ let allCards = [
     name: "Ace of Diamonds",
     card: "A",
     suit: "d",
-    value: 1,
+    value: 14,
     image: "images/AD.png"
   },
   {
@@ -94,7 +94,7 @@ let allCards = [
     name: "Ace of Clubs",
     card: "A",
     suit: "c",
-    value: 1,
+    value: 14,
     image: "images/AC.png"
   },
   {
@@ -185,7 +185,7 @@ let allCards = [
     name: "Ace of Hearts",
     card: "A",
     suit: "h",
-    value: 1,
+    value: 14,
     image: "images/AH.png"
   },
   {
@@ -276,7 +276,7 @@ let allCards = [
     name: "Ace of Spades",
     card: "A",
     suit: "s",
-    value: 1,
+    value: 14,
     image: "images/AS.png"
   },
   {
@@ -374,12 +374,12 @@ let dealFiveCards = function (){
   if(step === 0){
     step++
   }else if(step === 1){
-    let j = 0;
+    let i = 0;
     let refreshCard = document.getElementsByClassName("cards");
     allCards = [...allCardsUnchanged];
-    while(j < 5){
+    while(i < 5){
       refreshCard[0].parentNode.removeChild(refreshCard[0]);
-      j++;
+      i++;
     }
   }
   currentHand = [];
@@ -404,17 +404,18 @@ let dealFiveCards = function (){
 
 let swapCards = function(){
   for(let i = 0; i < 5; i++){
-    let empty = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
     document.getElementById("card-" + String(i)).removeEventListener("click", selectCard);
     if(document.getElementById("card-" + String(i)).classList.contains("selected")){
+      let empty = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
       currentHand.splice(i, 1, empty[0]);
       document.getElementById("card-" + String(i)).classList.remove("selected")
       document.getElementById("card-" + String(i)).src = currentHand[i].image;
     }
-    swapButton.classList.add("hide");
-    dealButton.classList.remove("hide");
-
   }
+  swapButton.classList.add("hide");
+  dealButton.classList.remove("hide");
+  let winningHand = checkWinningHand(currentHand);
+  document.getElementById("notification").innerHTML = winningHand;
 }
 
 let selectCard = function(){
@@ -431,8 +432,45 @@ let selectCard = function(){
   }
 }
 
-let checkWinningHand = function (){
+let checkWinningHand = function (hand){
+  //straight
+  let sortedHand = [...hand];
+  sortedHand.sort(function(a, b){return a.value-b.value});
+  if(sortedHand[4].value - sortedHand[3].value === 1 && sortedHand[3].value - sortedHand[2].value === 1 && sortedHand[2].value - sortedHand[1].value === 1 && sortedHand[1].value - sortedHand[0].value === 1){
+    return "Straight";
+  }
 
+  //three of a kind
+  let threeOfAKindCheck = 0;
+  for(let i = 0; i < hand.length - 1; i++){
+    for(let j = i + 1; j < hand.length; j++){
+      if(hand[i].value === hand[j].value){
+        for(let k = j + 1; k < hand.length; k++){
+          if(hand[j].value === hand[k].value){
+            threeOfAKindCheck++;
+          }
+        }
+      }
+    }
+  }
+  if(threeOfAKindCheck === 1){
+    return "Three of a Kind";
+  }
+
+ //two pairs
+  let twoPairsCheck = 0;
+  for(let i = 0; i < hand.length - 1; i++){
+    for(let j = i + 1; j < hand.length; j++){
+      if(hand[i].value === hand[j].value){
+        twoPairsCheck++;
+      }
+    }
+  }
+  if(twoPairsCheck === 2){
+    return "Two Pairs";
+  }
+  //No win
+  return "You didn't win anything, try again.";
 }
 
 let rewardChips = function(){
