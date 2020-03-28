@@ -379,15 +379,32 @@ let dealFiveCards = function (){
   for(let i = 0; i < currentHand.length; i++){
     let imgDOM = document.createElement("IMG");
     imgDOM.src = currentHand[i].image;
-    imgDOM.className = "cards";
+    imgDOM.classList.add("cards");
     imgDOM.id = "card-" + String(i);
+    imgDOM.addEventListener("click", selectCard);
     document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
-    dealButton.className = "hide";
+    dealButton.classList.add("hide");
+    swapButton.classList.remove("hide");
+
   }
 }
 
 let swapCards = function(){
 
+}
+
+let selectCard = function(){
+  if(this.classList.contains("selected")){
+    this.classList.remove("selected");
+    for(var i = 0; i < currentHand.length; i++){
+      if(this.id === "card-" + String(i)){
+      this.src = currentHand[i].image;
+      }
+    }
+  }else {
+    this.src = "images/red_back.png";
+    this.classList.add("selected");
+  }
 }
 
 let checkWinningHand = function (){
