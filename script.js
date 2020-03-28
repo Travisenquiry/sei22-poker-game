@@ -1,4 +1,4 @@
-var allCardsObjectArray = [
+let allCards = [
   {
     name: "Ace of Diamonds",
     card: "A",
@@ -77,7 +77,7 @@ var allCardsObjectArray = [
     image: "images/JD.png"
   },
   {
-    name: "Queen of diamonds",
+    name: "Queen of Diamonds",
     card: "Q",
     suit: "d",
     value: 12,
@@ -354,7 +354,7 @@ var allCardsObjectArray = [
     card: "Q",
     suit: "s",
     value: 12,
-    image: "images/As.png"
+    image: "images/QS.png"
   },
   {
     name: "King of Spades",
@@ -363,10 +363,22 @@ var allCardsObjectArray = [
     value: 13,
     image: "images/KS.png"
   },
-
-
 ];
+let allCardsUnchanged = [...allCards];
+let currentHand = [];
+let dealButton = document.getElementById("deal");
 
-var checkWinningHand = function (){
+let dealFiveCards = function (){
+  let temp1 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
+  let temp2 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
+  let temp3 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
+  let temp4 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
+  let temp5 = (allCards.splice(Math.floor(Math.random() * (allCards.length + 1)), 1));
+  currentHand = currentHand.concat(temp1, temp2, temp3, temp4, temp5);
+}
+
+let checkWinningHand = function (){
 
 }
+
+dealButton.addEventListener("click", dealFiveCards);
