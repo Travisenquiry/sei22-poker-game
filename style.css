@@ -6,6 +6,18 @@
 	display: none;
 }
 
+#winning-hand-details-container{
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	margin-bottom: 20px;
+}
+
+.winning-hand-details{
+	text-align: justify;
+	margin: auto 30px;
+}
+
 body{
 	text-align: center;
 }

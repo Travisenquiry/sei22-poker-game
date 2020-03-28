@@ -6,15 +6,33 @@
 </head>
 <body>
   <h1>Video Poker</h1>
+  <div id="winning-hand-details-container">
+    <span class="winning-hand-details">
+      Royal Straight Flush: x250
+      <br />Straight Flush: x25
+      <br />Four of a Kind: x20
+      <br />Full House: x10
+      </span>
+    <span class="winning-hand-details">
+      Flush: x4
+      <br />Straight: x3
+      <br />Three of a Kind: x1
+      <br />Two Pair: x1
+    </span>
+  </div>
   <div id="main-container">
     <div id="card-main-container">
+      <div id="notification">Welcome to Video Poker!</div>
       <span id="card-container-0"></span>
       <span id="card-container-1"></span>
       <span id="card-container-2"></span>
       <span id="card-container-3"></span>
       <span id="card-container-4"></span>
     </div>
-    <div id="button-container"></div>
+    <div id="chips-container">
+      <span id="total-chips">TOTAL CHIPS</span>
+    </div>
+    <div id="button-container">
       <button id="deal">Deal</button>
       <button id="swap" class="hide">Swap</button>
     </div>

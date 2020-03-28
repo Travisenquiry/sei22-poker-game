@@ -398,6 +398,7 @@ let dealFiveCards = function (){
     document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
     dealButton.classList.add("hide");
     swapButton.classList.remove("hide");
+    document.getElementById("notification").innerHTML = "Select the cards that you want to discard"
   }
 }
 
@@ -419,7 +420,7 @@ let swapCards = function(){
 let selectCard = function(){
   if(this.classList.contains("selected")){
     this.classList.remove("selected");
-    for(var i = 0; i < currentHand.length; i++){
+    for(let i = 0; i < currentHand.length; i++){
       if(this.id === "card-" + String(i)){
       this.src = currentHand[i].image;
       }
@@ -430,11 +431,11 @@ let selectCard = function(){
   }
 }
 
-let rewardChips = function(){
+let checkWinningHand = function (){
 
 }
 
-let checkWinningHand = function (){
+let rewardChips = function(){
 
 }
 
