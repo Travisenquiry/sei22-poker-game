@@ -376,6 +376,7 @@ let dealFiveCards = function (){
   }else if(step === 1){
     let j = 0;
     let refreshCard = document.getElementsByClassName("cards");
+    allCards = [...allCardsUnchanged];
     while(j < 5){
       refreshCard[0].parentNode.removeChild(refreshCard[0]);
       j++;
