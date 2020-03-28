@@ -368,8 +368,20 @@ let allCardsUnchanged = [...allCards];
 let currentHand = [];
 let dealButton = document.getElementById("deal");
 let swapButton = document.getElementById("swap");
+let step = 0;
 
 let dealFiveCards = function (){
+  if(step === 0){
+    step++
+  }else if(step === 1){
+    let j = 0;
+    let refreshCard = document.getElementsByClassName("cards");
+    while(j < 5){
+      refreshCard[0].parentNode.removeChild(refreshCard[0]);
+      j++;
+    }
+  }
+  currentHand = [];
   let temp1 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
   let temp2 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
   let temp3 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
@@ -385,18 +397,21 @@ let dealFiveCards = function (){
     document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
     dealButton.classList.add("hide");
     swapButton.classList.remove("hide");
-
   }
 }
 
 let swapCards = function(){
-  for(var i = 0; i < 5; i++){
+  for(let i = 0; i < 5; i++){
     let empty = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+    document.getElementById("card-" + String(i)).removeEventListener("click", selectCard);
     if(document.getElementById("card-" + String(i)).classList.contains("selected")){
       currentHand.splice(i, 1, empty[0]);
       document.getElementById("card-" + String(i)).classList.remove("selected")
       document.getElementById("card-" + String(i)).src = currentHand[i].image;
     }
+    swapButton.classList.add("hide");
+    dealButton.classList.remove("hide");
+
   }
 }
 
@@ -412,6 +427,10 @@ let selectCard = function(){
     this.src = "images/red_back.png";
     this.classList.add("selected");
   }
+}
+
+let rewardChips = function(){
+
 }
 
 let checkWinningHand = function (){
