@@ -390,7 +390,12 @@ let dealFiveCards = function (){
 }
 
 let swapCards = function(){
-
+  for(var i = 0; i < 5; i++){
+    let empty = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+    if(document.getElementById("card-" + String(i)).classList.contains("selected")){
+      currentHand.splice(i, 1, empty[0]);
+    }
+  }
 }
 
 let selectCard = function(){
