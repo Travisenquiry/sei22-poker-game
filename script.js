@@ -433,9 +433,46 @@ let selectCard = function(){
 }
 
 let checkWinningHand = function (hand){
-  //straight
+  //create a sorted hand for usage
   let sortedHand = [...hand];
   sortedHand.sort(function(a, b){return a.value-b.value});
+
+  //royal flush
+  if(sortedHand[0].suit === "s" && sortedHand[1].suit === "s" && sortedHand[2].suit === "s" && sortedHand[3].suit === "s" && sortedHand[4].suit === "s"){
+    if(sortedHand[0].value === 10 && sortedHand[1].value === 11 && sortedHand[2].value === 12 && sortedHand[3].value === 13 && sortedHand[4].value === 14){
+      return "Royal Straight Flush";
+    }
+  }
+
+  //straight flush
+  if(sortedHand[4].value - sortedHand[3].value === 1 && sortedHand[3].value - sortedHand[2].value === 1 && sortedHand[2].value - sortedHand[1].value === 1 && sortedHand[1].value - sortedHand[0].value === 1){
+      if(sortedHand[0].suit === sortedHand[1].suit && sortedHand[0].suit === sortedHand[2].suit && sortedHand[0].suit === sortedHand[3].suit && sortedHand[0].suit === sortedHand[4].suit){
+        return "Straight Flush";
+      }
+  }
+
+  //Four of a kind
+  if(sortedHand[0].value === sortedHand[1].value && sortedHand[1].value === sortedHand[2].value && sortedHand[2].value === sortedHand[3].value){
+    return "Four of a Kind";
+  }
+  if(sortedHand[1].value === sortedHand[2].value && sortedHand[2].value === sortedHand[3].value && sortedHand[3].value === sortedHand[4].value){
+    return "Four of a kind";
+  }
+
+  //full house
+  if(sortedHand[0].value === sortedHand[1].value && sortedHand[1].value === sortedHand[2].value && sortedHand[3].value === sortedHand[4].value){
+    return "Full House";
+  }
+  if(sortedHand[0].value === sortedHand[1].value && sortedHand[2].value === sortedHand[3].value && sortedHand[3].value === sortedHand[4].value){
+    return "Full House";
+  }
+
+  //flush
+  if(hand[0].suit === hand[1].suit && hand[0].suit === hand[2].suit && hand[0].suit === hand[3].suit && hand[0].suit === hand[4].suit){
+    return "Flush";
+  }
+
+  //straight
   if(sortedHand[4].value - sortedHand[3].value === 1 && sortedHand[3].value - sortedHand[2].value === 1 && sortedHand[2].value - sortedHand[1].value === 1 && sortedHand[1].value - sortedHand[0].value === 1){
     return "Straight";
   }
