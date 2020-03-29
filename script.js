@@ -1,3 +1,4 @@
+//all cards object
 let allCards = [
   {
     name: "Ace of Diamonds",
@@ -364,12 +365,15 @@ let allCards = [
     image: "images/KS.png"
   },
 ];
+
+//all required global variables
 let allCardsUnchanged = [...allCards];
 let currentHand = [];
 let dealButton = document.getElementById("deal");
 let swapButton = document.getElementById("swap");
 let step = 0;
 
+//function that starts the game and deal 5 new cards to hand
 let dealFiveCards = function (){
   if(step === 0){
     step++
@@ -396,12 +400,13 @@ let dealFiveCards = function (){
     imgDOM.id = "card-" + String(i);
     imgDOM.addEventListener("click", selectCard);
     document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
-    dealButton.classList.add("hide");
-    swapButton.classList.remove("hide");
-    document.getElementById("notification").innerHTML = "Select the cards that you want to discard"
   }
+  dealButton.classList.add("hide");
+  swapButton.classList.remove("hide");
+  document.getElementById("notification").innerHTML = "Select the cards that you want to discard"
 }
 
+//function to swap the discarded cards for new cards and check for winning hand
 let swapCards = function(){
   for(let i = 0; i < 5; i++){
     document.getElementById("card-" + String(i)).removeEventListener("click", selectCard);
@@ -418,6 +423,7 @@ let swapCards = function(){
   document.getElementById("notification").innerHTML = winningHand;
 }
 
+//function to allow the user to select the card to discard
 let selectCard = function(){
   if(this.classList.contains("selected")){
     this.classList.remove("selected");
@@ -432,6 +438,7 @@ let selectCard = function(){
   }
 }
 
+//function that contains all the winning condition
 let checkWinningHand = function (hand){
   //create a sorted hand for usage
   let sortedHand = [...hand];
@@ -510,9 +517,11 @@ let checkWinningHand = function (hand){
   return "You didn't win anything, try again.";
 }
 
+//function to reward chips based on condition given
 let rewardChips = function(){
 
 }
 
+//add event listeners to the buttons
 dealButton.addEventListener("click", dealFiveCards);
 swapButton.addEventListener("click", swapCards);
