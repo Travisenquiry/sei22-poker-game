@@ -372,8 +372,11 @@ let currentHand = [];
 let dealButton = document.getElementById("deal");
 let swapButton = document.getElementById("swap");
 let notification = document.getElementById("notification");
+let betRaiseButton = document.getElementById("bet-raise");
+let betLowerButton = document.getElementById("bet-lower");
 let step = 0;
 let totalChips = 10000;
+let currentBet;
 
 //function that starts the game and deal 5 new cards to hand
 const dealFiveCards = function (){
@@ -405,6 +408,8 @@ const dealFiveCards = function (){
   }
   dealButton.classList.add("hide");
   swapButton.classList.remove("hide");
+  betRaiseButton.classList.add("hide");
+  betLowerButton.classList.add("hide");
   notification.classList.remove("win");
   notification.innerHTML = "Select the cards that you want to discard"
 }
@@ -422,6 +427,8 @@ const swapCards = function(){
   }
   swapButton.classList.add("hide");
   dealButton.classList.remove("hide");
+  betRaiseButton.classList.remove("hide");
+  betLowerButton.classList.remove("hide");
   let winningHand = checkWinningHand(currentHand);
   switch(winningHand){
     case "ROYAL STRAIGHT FLUSH":
