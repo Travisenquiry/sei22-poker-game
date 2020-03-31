@@ -374,44 +374,57 @@ let swapButton = document.getElementById("swap");
 let notification = document.getElementById("notification");
 let betRaiseButton = document.getElementById("bet-raise");
 let betLowerButton = document.getElementById("bet-lower");
+let currentBetDOM = document.getElementById("current-bet");
+let totalChipsDOM = document.getElementById("total-chips");
 let step = 0;
 let totalChips = 10000;
-let currentBet;
+let currentBet = 0;
+totalChipsDOM.value = totalChips;
+currentBetDOM.value = currentBet;
+totalChipsDOM.innerHTML = totalChips;
+currentBetDOM.innerHTML = currentBet;
 
 //function that starts the game and deal 5 new cards to hand
 const dealFiveCards = function (){
-  if(step === 0){
-    step++
-  }else if(step === 1){
-    let i = 0;
-    let refreshCard = document.getElementsByClassName("cards");
-    allCards = [...allCardsUnchanged];
-    while(i < 5){
-      refreshCard[0].parentNode.removeChild(refreshCard[0]);
-      i++;
+  if(totalChips >= currentBet){
+    totalChips = totalChips - currentBet;
+    totalChipsDOM.innerHTML = totalChips;
+    totalChipsDOM.value = totalChips;
+    if(step === 0){
+      step++
+    }else if(step === 1){
+      let i = 0;
+      let refreshCard = document.getElementsByClassName("cards");
+      allCards = [...allCardsUnchanged];
+      while(i < 5){
+        refreshCard[0].parentNode.removeChild(refreshCard[0]);
+        i++;
+      }
     }
+    currentHand = [];
+    let temp1 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+    let temp2 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+    let temp3 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+    let temp4 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+    let temp5 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+    currentHand = currentHand.concat(temp1, temp2, temp3, temp4, temp5);
+    for(let i = 0; i < currentHand.length; i++){
+      let imgDOM = document.createElement("IMG");
+      imgDOM.src = currentHand[i].image;
+      imgDOM.classList.add("cards");
+      imgDOM.id = "card-" + String(i);
+      imgDOM.addEventListener("click", selectCard);
+      document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
+    }
+    dealButton.classList.add("hide");
+    swapButton.classList.remove("hide");
+    betRaiseButton.classList.add("hide");
+    betLowerButton.classList.add("hide");
+    notification.classList.remove("win");
+    notification.innerHTML = "Select the cards that you want to discard"
+  }else {
+    notification.innerHTML = "You do not have enough chips!";
   }
-  currentHand = [];
-  let temp1 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
-  let temp2 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
-  let temp3 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
-  let temp4 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
-  let temp5 = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
-  currentHand = currentHand.concat(temp1, temp2, temp3, temp4, temp5);
-  for(let i = 0; i < currentHand.length; i++){
-    let imgDOM = document.createElement("IMG");
-    imgDOM.src = currentHand[i].image;
-    imgDOM.classList.add("cards");
-    imgDOM.id = "card-" + String(i);
-    imgDOM.addEventListener("click", selectCard);
-    document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
-  }
-  dealButton.classList.add("hide");
-  swapButton.classList.remove("hide");
-  betRaiseButton.classList.add("hide");
-  betLowerButton.classList.add("hide");
-  notification.classList.remove("win");
-  notification.innerHTML = "Select the cards that you want to discard"
 }
 
 //function to swap the discarded cards for new cards and check for winning hand
@@ -434,41 +447,57 @@ const swapCards = function(){
     case "ROYAL STRAIGHT FLUSH":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 251);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     case "STRAIGHT FLUSH":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 26);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     case "FOUR OF A KIND":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 21);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     case "FULL HOUSE":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 11);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     case "FLUSH":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 5);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     case "STRAIGHT":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 4);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     case "THREE OF A KIND":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 2);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     case "TWO PAIRS":
       notification.innerHTML = winningHand;
       notification.classList.add("win");
+      totalChips = totalChips + (currentBet * 2);
+      totalChipsDOM.innerHTML = totalChips;
       break;
 
     default:
@@ -576,6 +605,24 @@ const rewardChips = function(){
 
 }
 
+const betRaise = function(){
+  if(currentBet < 1000){
+    currentBet = currentBet + 100;
+    currentBetDOM.value = currentBet;
+    currentBetDOM.innerHTML = currentBet;
+  }
+}
+
+const betLower = function(){
+  if(currentBet > 0){
+    currentBet = currentBet - 100;
+    currentBetDOM.value = currentBet;
+    currentBetDOM.innerHTML = currentBet;
+  }
+}
+
 //add event listeners to the buttons
 dealButton.addEventListener("click", dealFiveCards);
 swapButton.addEventListener("click", swapCards);
+betRaiseButton.addEventListener("click", betRaise);
+betLowerButton.addEventListener("click", betLower);
