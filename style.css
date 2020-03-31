@@ -6,6 +6,11 @@
 	display: none;
 }
 
+.win{
+	color: red;
+	text-shadow: -1px 0 yellow, 0 1px yellow, 1px 0 yellow, 0 -1px yellow;
+}
+
 #winning-hand-details-container{
 	display: flex;
 	justify-content: center;
@@ -22,8 +27,17 @@
 	background-color: yellow;
 }
 
+#notification{
+	font-size: 24px;
+}
+
 body{
 	text-align: center;
 	background-color: blue;
 	color: yellow;
+}
+
+h1 {
+	color: red;
+	text-shadow: -1px 0 yellow, 0 1px yellow, 1px 0 yellow, 0 -1px yellow;
 }

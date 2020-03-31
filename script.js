@@ -371,7 +371,9 @@ let allCardsUnchanged = [...allCards];
 let currentHand = [];
 let dealButton = document.getElementById("deal");
 let swapButton = document.getElementById("swap");
+let notification = document.getElementById("notification");
 let step = 0;
+let totalChips = 10000;
 
 //function that starts the game and deal 5 new cards to hand
 const dealFiveCards = function (){
@@ -403,7 +405,8 @@ const dealFiveCards = function (){
   }
   dealButton.classList.add("hide");
   swapButton.classList.remove("hide");
-  document.getElementById("notification").innerHTML = "Select the cards that you want to discard"
+  notification.classList.remove("win");
+  notification.innerHTML = "Select the cards that you want to discard"
 }
 
 //function to swap the discarded cards for new cards and check for winning hand
@@ -411,8 +414,8 @@ const swapCards = function(){
   for(let i = 0; i < 5; i++){
     document.getElementById("card-" + String(i)).removeEventListener("click", selectCard);
     if(document.getElementById("card-" + String(i)).classList.contains("selected")){
-      let empty = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
-      currentHand.splice(i, 1, empty[0]);
+      let grabNewCard = (allCards.splice(Math.floor(Math.random() * (allCards.length)), 1));
+      currentHand.splice(i, 1, grabNewCard[0]);
       document.getElementById("card-" + String(i)).classList.remove("selected")
       document.getElementById("card-" + String(i)).src = currentHand[i].image;
     }
@@ -420,7 +423,51 @@ const swapCards = function(){
   swapButton.classList.add("hide");
   dealButton.classList.remove("hide");
   let winningHand = checkWinningHand(currentHand);
-  document.getElementById("notification").innerHTML = winningHand;
+  switch(winningHand){
+    case "ROYAL STRAIGHT FLUSH":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    case "STRAIGHT FLUSH":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    case "FOUR OF A KIND":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    case "FULL HOUSE":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    case "FLUSH":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    case "STRAIGHT":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    case "THREE OF A KIND":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    case "TWO PAIRS":
+      notification.innerHTML = winningHand;
+      notification.classList.add("win");
+      break;
+
+    default:
+      notification.innerHTML = "You didn't win anything, try again.";
+      break;
+  }
 }
 
 //function to allow the user to select the card to discard
@@ -447,41 +494,41 @@ let checkWinningHand = function (hand){
   //royal straight flush
   if(sortedHand[0].suit === sortedHand[1].suit && sortedHand[0].suit === sortedHand[2].suit && sortedHand[0].suit === sortedHand[3].suit && sortedHand[0].suit === sortedHand[4].suit){
     if(sortedHand[0].value === 10 && sortedHand[1].value === 11 && sortedHand[2].value === 12 && sortedHand[3].value === 13 && sortedHand[4].value === 14){
-      return "Royal Straight Flush";
+      return "ROYAL STRAIGHT FLUSH";
     }
   }
 
   //straight flush
   if(sortedHand[4].value - sortedHand[3].value === 1 && sortedHand[3].value - sortedHand[2].value === 1 && sortedHand[2].value - sortedHand[1].value === 1 && sortedHand[1].value - sortedHand[0].value === 1){
       if(sortedHand[0].suit === sortedHand[1].suit && sortedHand[0].suit === sortedHand[2].suit && sortedHand[0].suit === sortedHand[3].suit && sortedHand[0].suit === sortedHand[4].suit){
-        return "Straight Flush";
+        return "STRAIGHT FLUSH";
       }
   }
 
   //Four of a kind
   if(sortedHand[0].value === sortedHand[1].value && sortedHand[1].value === sortedHand[2].value && sortedHand[2].value === sortedHand[3].value){
-    return "Four of a Kind";
+    return "FOUR OF A KIND";
   }
   if(sortedHand[1].value === sortedHand[2].value && sortedHand[2].value === sortedHand[3].value && sortedHand[3].value === sortedHand[4].value){
-    return "Four of a kind";
+    return "FOUR OF A KIND";
   }
 
   //full house
   if(sortedHand[0].value === sortedHand[1].value && sortedHand[1].value === sortedHand[2].value && sortedHand[3].value === sortedHand[4].value){
-    return "Full House";
+    return "FULL HOUSE";
   }
   if(sortedHand[0].value === sortedHand[1].value && sortedHand[2].value === sortedHand[3].value && sortedHand[3].value === sortedHand[4].value){
-    return "Full House";
+    return "FULL HOUSE";
   }
 
   //flush
   if(hand[0].suit === hand[1].suit && hand[0].suit === hand[2].suit && hand[0].suit === hand[3].suit && hand[0].suit === hand[4].suit){
-    return "Flush";
+    return "FLUSH";
   }
 
   //straight
   if(sortedHand[4].value - sortedHand[3].value === 1 && sortedHand[3].value - sortedHand[2].value === 1 && sortedHand[2].value - sortedHand[1].value === 1 && sortedHand[1].value - sortedHand[0].value === 1){
-    return "Straight";
+    return "STRAIGHT";
   }
 
   //three of a kind
@@ -498,7 +545,7 @@ let checkWinningHand = function (hand){
     }
   }
   if(threeOfAKindCheck === 1){
-    return "Three of a Kind";
+    return "THREE OF A KIND";
   }
 
  //two pairs
@@ -511,7 +558,7 @@ let checkWinningHand = function (hand){
     }
   }
   if(twoPairsCheck === 2){
-    return "Two Pairs";
+    return "TWO PAIRS";
   }
   //No win
   return "You didn't win anything, try again.";
