@@ -386,7 +386,7 @@ currentBetDOM.innerHTML = currentBet;
 
 //function that starts the game and deal 5 new cards to hand
 const dealFiveCards = function (){
-  if(totalChips >= currentBet){
+  if(totalChips >= currentBet && currentBet !== 0){
     totalChips = totalChips - currentBet;
     totalChipsDOM.innerHTML = totalChips;
     totalChipsDOM.value = totalChips;
@@ -414,6 +414,8 @@ const dealFiveCards = function (){
       imgDOM.classList.add("cards");
       imgDOM.id = "card-" + String(i);
       imgDOM.addEventListener("click", selectCard);
+      imgDOM.addEventListener("mouseover", addShadow);
+      imgDOM.addEventListener("mouseout", removeShadow);
       document.getElementById("card-container-" + String(i)).appendChild(imgDOM);
     }
     dealButton.classList.add("hide");
@@ -422,6 +424,8 @@ const dealFiveCards = function (){
     betLowerButton.classList.add("hide");
     notification.classList.remove("win");
     notification.innerHTML = "Select the cards that you want to discard"
+  }else if(currentBet === 0){
+    notification.innerHTML = "Please bet above 0 chips";
   }else {
     notification.innerHTML = "You do not have enough chips!";
   }
@@ -442,6 +446,10 @@ const swapCards = function(){
   dealButton.classList.remove("hide");
   betRaiseButton.classList.remove("hide");
   betLowerButton.classList.remove("hide");
+  for(let j = 0; j < 5; j++){
+    document.getElementById("card-" + String(j)).removeEventListener("mouseover", addShadow);
+    document.getElementById("card-" + String(j)).removeEventListener("mouseout", removeShadow);
+  }
   let winningHand = checkWinningHand(currentHand);
   switch(winningHand){
     case "ROYAL STRAIGHT FLUSH":
@@ -600,11 +608,7 @@ let checkWinningHand = function (hand){
   return "You didn't win anything, try again.";
 }
 
-//function to reward chips based on condition given
-const rewardChips = function(){
-
-}
-
+//function for the user to raise the bet
 const betRaise = function(){
   if(currentBet < 1000){
     currentBet = currentBet + 100;
@@ -613,6 +617,7 @@ const betRaise = function(){
   }
 }
 
+//function for the user to lower the bet
 const betLower = function(){
   if(currentBet > 0){
     currentBet = currentBet - 100;
@@ -621,7 +626,17 @@ const betLower = function(){
   }
 }
 
-//add event listeners to the buttons
+//function to add shadow on image upon hover
+const addShadow = function(){
+  this.classList.add("hover-shadow");
+}
+
+//function to remove shadow on image upon hover
+const removeShadow = function(){
+  this.classList.remove("hover-shadow");
+}
+
+//add event listeners to the DOMs
 dealButton.addEventListener("click", dealFiveCards);
 swapButton.addEventListener("click", swapCards);
 betRaiseButton.addEventListener("click", betRaise);

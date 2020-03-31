@@ -36,6 +36,10 @@
 	justify-content: space-around;
 }
 
+.hover-shadow{
+	border:1px solid red;
+}
+
 body{
 	text-align: center;
 	background-color: blue;
