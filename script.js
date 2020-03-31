@@ -374,7 +374,7 @@ let swapButton = document.getElementById("swap");
 let step = 0;
 
 //function that starts the game and deal 5 new cards to hand
-let dealFiveCards = function (){
+const dealFiveCards = function (){
   if(step === 0){
     step++
   }else if(step === 1){
@@ -407,7 +407,7 @@ let dealFiveCards = function (){
 }
 
 //function to swap the discarded cards for new cards and check for winning hand
-let swapCards = function(){
+const swapCards = function(){
   for(let i = 0; i < 5; i++){
     document.getElementById("card-" + String(i)).removeEventListener("click", selectCard);
     if(document.getElementById("card-" + String(i)).classList.contains("selected")){
@@ -444,8 +444,8 @@ let checkWinningHand = function (hand){
   let sortedHand = [...hand];
   sortedHand.sort(function(a, b){return a.value-b.value});
 
-  //royal flush
-  if(sortedHand[0].suit === "s" && sortedHand[1].suit === "s" && sortedHand[2].suit === "s" && sortedHand[3].suit === "s" && sortedHand[4].suit === "s"){
+  //royal straight flush
+  if(sortedHand[0].suit === sortedHand[1].suit && sortedHand[0].suit === sortedHand[2].suit && sortedHand[0].suit === sortedHand[3].suit && sortedHand[0].suit === sortedHand[4].suit){
     if(sortedHand[0].value === 10 && sortedHand[1].value === 11 && sortedHand[2].value === 12 && sortedHand[3].value === 13 && sortedHand[4].value === 14){
       return "Royal Straight Flush";
     }
@@ -518,7 +518,7 @@ let checkWinningHand = function (hand){
 }
 
 //function to reward chips based on condition given
-let rewardChips = function(){
+const rewardChips = function(){
 
 }
 
